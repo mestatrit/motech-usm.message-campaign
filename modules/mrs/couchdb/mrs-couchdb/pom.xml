@@ -14,7 +14,7 @@
     <description>MOTECH MRS CouchDB Implementation</description>
     <version>0.14.1-SNAPSHOT</version>
     <properties>					
-        <modules.root.dir>${basedir}/../../..</modules.root.dir>
+        <modules.root.dir>${basedir}/../../../..</modules.root.dir>
     </properties>
     <dependencies>
         <dependency>

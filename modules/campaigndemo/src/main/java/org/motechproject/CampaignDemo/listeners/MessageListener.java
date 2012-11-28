@@ -3,11 +3,9 @@ package org.motechproject.CampaignDemo.listeners;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonProperty;
 import org.motechproject.couch.mrs.model.CouchMRSPerson;
 import org.motechproject.couch.mrs.service.CouchMRSService;
 import org.motechproject.cmslite.api.model.ContentNotFoundException;
-import org.motechproject.cmslite.api.model.StreamContent;
 import org.motechproject.cmslite.api.model.StringContent;
 import org.motechproject.cmslite.api.service.CMSLiteService;
 import org.motechproject.ivr.model.CallInitiationException;
@@ -93,7 +91,7 @@ public class MessageListener {
         if (campaignName.contains("IVR")) {
             format = formats.get(0);
         }
-        if (campaignName.contains("SMS")) { 
+        if (campaignName.contains("SMS")) {
             format = formats.get(1);
         }
         List<CouchMRSPerson> patientList = (List<CouchMRSPerson>) couchMRSService.findByExternalId(externalId);
@@ -104,7 +102,7 @@ public class MessageListener {
             toRemove.setCampaignName(campaignName);
             toRemove.setExternalId(externalId);
 
-            service.stopAll(toRemove); 
+            service.stopAll(toRemove);
             return;
         } else {
 
@@ -113,17 +111,18 @@ public class MessageListener {
             if (format.equals("IVR")) {
                 if (cmsliteService.isStringContentAvailable(language, messageKey)) {
                     StringContent content = cmsliteService.getStringContent(language, messageKey);
-                                      
+
                     CallRequest request = new CallRequest(phoneNum, 119, content.getValue());
 
                     String urlEnd = "";
-                    if (messageKey.matches("cron-message")){
-                    	urlEnd = "cron";
+                    if (messageKey.matches("cron-message")) {
+                        urlEnd = "cron";
+                    } else {
+                        urlEnd = messageKey;
                     }
-                    else
-                    	urlEnd = messageKey;
                     request.setVxml("http://webhosting.voxeo.net/92594/www/" + urlEnd + ".xml");
-                    //request.setVxml("http://130.111.132.59:8080/motech-platform-server/module/cmsliteapi/stream/en/" + urlEnd);
+                    // request.setVxml("http://130.111.132.59:8080/motech-platform-server/module/cmsliteapi/stream/en/"
+                    // + urlEnd);
                     request.setMotechId(patientList.get(0).getExternalId());
 
                     request.getPayload().put("applicationName", "CampaignDemo");

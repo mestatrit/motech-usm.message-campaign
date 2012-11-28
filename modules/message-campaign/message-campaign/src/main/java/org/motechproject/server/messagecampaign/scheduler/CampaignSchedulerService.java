@@ -1,7 +1,6 @@
 package org.motechproject.server.messagecampaign.scheduler;
 
 import org.joda.time.DateTime;
-import org.joda.time.LocalTime;
 import org.motechproject.model.Time;
 import org.motechproject.scheduler.MotechSchedulerService;
 import org.motechproject.server.messagecampaign.EventKeys;
@@ -10,7 +9,6 @@ import org.motechproject.server.messagecampaign.dao.AllMessageCampaigns;
 import org.motechproject.server.messagecampaign.domain.campaign.Campaign;
 import org.motechproject.server.messagecampaign.domain.campaign.CampaignEnrollment;
 import org.motechproject.server.messagecampaign.domain.message.CampaignMessage;
-import org.motechproject.server.messagecampaign.domain.message.OffsetCampaignMessage;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,11 +51,7 @@ public abstract class CampaignSchedulerService<MESSAGE extends CampaignMessage, 
 
     protected abstract void scheduleMessageJob(CampaignEnrollment enrollment, CampaignMessage message);
 
-    protected Time deliverTimeFor(CampaignEnrollment enrollment, CampaignMessage message) {
-    	Time time = enrollment.getDeliverTime();
-        LocalTime localTime = new LocalTime(time.getHour(), time.getMinute());
-        //message = (OffsetCampaignMessage)message;
-        //localTime = localTime.plusMinutes(message.timeOffset());
+    protected Time deliverTimeFor(CampaignEnrollment enrollment, CampaignMessage message) {      
         return enrollment.getDeliverTime();// != null ? enrollment.getDeliverTime(): //: message.getStartTime();
     }
 
