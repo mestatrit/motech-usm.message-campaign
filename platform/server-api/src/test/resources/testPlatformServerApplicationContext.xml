@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <import resource="classpath*:META-INF/motech/*.xml"/>
+
+    <!-- overwrite osgiFrameworkService definition -->
+    <bean id="osgiFrameworkService" class="org.motechproject.server.osgi.OsgiFrameworkService">
+        <property name="internalBundleFolder" value="/WEB-INF/bundles"/>
+        <property name="externalBundleFolder" value=""/>
+        <!-- we do not use external bundles during tests -->
+        <property name="bundleLoaders">
+            <list>
+                <bean id="log4jBundleLoader" class="org.motechproject.server.osgi.Log4JBundleLoader"/>
+            </list>
+        </property>
+    </bean>
+</beans>

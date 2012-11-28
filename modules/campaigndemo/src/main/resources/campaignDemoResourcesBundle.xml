@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:osgi="http://www.springframework.org/schema/osgi"
+    xmlns="http://www.springframework.org/schema/beans"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd" >
+
+    <import resource="classpath*:META-INF/motech/*.xml" />
+
+    <bean class="org.motechproject.event.listener.annotations.EventAnnotationBeanPostProcessor" />
+
+    <osgi:reference
+        id="eventRelayOsgi"
+        cardinality="0..1"
+        interface="org.motechproject.event.listener.EventRelay" />
+
+    <osgi:reference
+        id="platformSettingsServiceOsgi"
+        interface="org.motechproject.server.config.service.PlatformSettingsService" />
+
+    <osgi:reference
+        id="eventListenerRegistryServiceOsgi"
+        interface="org.motechproject.event.listener.EventListenerRegistryService" />
+
+    <osgi:reference
+        id="smsServiceOsgi"
+        cardinality="0..1"
+        interface="org.motechproject.sms.api.service.SmsService" />
+
+    <osgi:reference
+        id="cmsLiteServiceOsgi"
+        cardinality="0..1"
+        interface="org.motechproject.cmslite.api.service.CMSLiteService" />
+
+    <osgi:reference
+        id="ivrServiceOsgi"
+        cardinality="0..1"
+        interface="org.motechproject.ivr.service.IVRService" />
+
+    <osgi:reference
+        id="messageCampaignServiceOsgi"
+        cardinality="0..1"
+        interface="org.motechproject.server.messagecampaign.service.MessageCampaignService" />
+
+    <osgi:reference
+        id="couchMRSService"
+        cardinality="0..1"
+        interface="org.motechproject.couch.mrs.service.CouchMRSService" />
+
+    <!-- For bootstrapping content at server startup -->
+
+    <bean
+        id="contentInitiator"
+        class="org.motechproject.CampaignDemo.content.ContentInitiator"
+        init-method="bootstrap" >
+    </bean>
+
+    <bean
+        id="urlInitiator"
+        class="org.motechproject.CampaignDemo.content.URLInitiator" >
+    </bean>
+
+    <bean
+        id="messageListener"
+        class="org.motechproject.CampaignDemo.listeners.MessageListener" >
+    </bean>
+
+</beans>

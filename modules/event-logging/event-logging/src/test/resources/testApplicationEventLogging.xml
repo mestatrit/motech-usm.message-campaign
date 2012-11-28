@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        ">
+
+    <import resource="classpath*:META-INF/motech/*.xml"/>
+
+    <bean id="eventLoggingDBConnector" factory-bean="eventLoggingSettings" factory-method="getConnector">
+        <constructor-arg value="test-motech-event-logging"/>
+        <constructor-arg value="couchdb.properties"/>
+    </bean>
+
+</beans>

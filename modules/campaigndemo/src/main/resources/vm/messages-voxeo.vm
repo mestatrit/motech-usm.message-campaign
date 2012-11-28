@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vxml version="2.1" xmlns="http://www.w3.org/2001/vxml">
+    #if ($messages.size > 0)
+    <menu>
+        <prompt>
+            #foreach( $message in $messages )
+                    <audio src="$message.audioFileUrl">
+                    </audio>
+            #end
+        </prompt>
+    </menu>
+</vxml>
